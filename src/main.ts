@@ -16,7 +16,6 @@ async function bootstrap() {
   app.use(compression());
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
-  //app.use(app.get('MyLogger'));
 
   await app.listen(process.env.PORT || 3000);
 }
