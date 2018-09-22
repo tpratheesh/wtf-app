@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import { Injectable } from '@nestjs/common';
-import { UserService } from './UserService';
+import { UserService } from 'user/service/UserService';
 import LoginForm from '../form/LoginForm';
 import { ConfigService } from 'config/ConfigService';
 import { Logger } from 'logger/Logger';
@@ -28,6 +28,13 @@ export class AuthService {
     }
 
     async validateUser(signedUser): Promise<boolean> {
+        const user = await this.userService.findUserByMobileNo(signedUser.mobileNo);
+        if (!user)
+            return false;
         return true;
+    }
+
+    async generateOTP(mobileNo) {
+        ;
     }
 }

@@ -4,6 +4,7 @@ import { User } from '../interface/User';
 import UserForm from '../form/UserForm';
 import AppError from 'exception/AppError';
 import { Logger } from 'logger/Logger';
+import { JwtUser } from 'auth/model/JwtUser';
 
 @Injectable()
 export class UserService {
@@ -43,5 +44,13 @@ export class UserService {
       throw new AppError('Invalid User')
     }
     await this.User.findByIdAndDelete({ _id: userId });
+  }
+
+  async findUserByMobileNo(mobileNo: String): Promise<User> {
+    let user = await this.User.findOne({ mobileNo: mobileNo })
+    if (user == null) {
+      user = await this.saveUser(new UserForm(mobileNo))
+    }
+    return user;
   }
 }

@@ -1,4 +1,4 @@
-export class User {
+export class JwtUser {
     name: String
     mobileNo: String
     email: String
