@@ -9,9 +9,10 @@ import * as passport from 'passport';
 import { LoggerModule } from 'logger/LoggerModule';
 import { UserModule } from 'user/UserModule';
 import LoginForm from './form/LoginForm';
+import { CommonModule } from 'common/CommonModule';
 
 @Module({
-    imports: [HttpModule, ConfigModule, LoggerModule, UserModule, JwtModule.register({ secretOrPrivateKey: 'key' }),],
+    imports: [HttpModule, ConfigModule, LoggerModule, UserModule, CommonModule, JwtModule.register({ secretOrPrivateKey: 'key' }),],
     providers: [AuthService, JwtStrategy, JwtUser, LoginForm],
     exports: [JwtUser, LoginForm],
     controllers: [AuthController]

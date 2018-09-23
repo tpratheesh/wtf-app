@@ -4,7 +4,6 @@ import { User } from '../interface/User';
 import UserForm from '../form/UserForm';
 import AppError from 'exception/AppError';
 import { Logger } from 'logger/Logger';
-import { JwtUser } from 'auth/model/JwtUser';
 
 @Injectable()
 export class UserService {

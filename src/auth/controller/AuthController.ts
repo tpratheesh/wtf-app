@@ -3,7 +3,7 @@ import handleError from 'utils/ErrorHandler';
 import { AuthService } from 'auth/service/AuthService';
 import LoginForm from '../form/LoginForm';
 import { Logger } from 'logger/Logger';
-import SuccessResponse from 'user/model/common/SuccessResponse';
+import SuccessResponse from 'common/model/SuccessResponse';
 
 @Controller()
 export class AuthController {

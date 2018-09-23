@@ -2,8 +2,8 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/co
 import { UserService } from '../service/UserService';
 import handleError from 'utils/ErrorHandler';
 import UserForm from '../form/UserForm';
-import SuccessResponse from '../model/common/SuccessResponse';
 import { Logger } from 'logger/Logger';
+import SuccessResponse from 'common/model/SuccessResponse';
 
 @Controller('api')
 export class UserController {
