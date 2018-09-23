@@ -17,7 +17,7 @@ export class TeamService {
 
     async saveTeam(form: TeamForm): Promise<Team> {
         let team = await this.Team.findOne({ name: form.name });
-        console.log(team)
+        //console.log(team.id)
         if (team == null) {
             const newTeam = new this.Team(form);
             return await newTeam.save();

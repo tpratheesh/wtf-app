@@ -11,13 +11,7 @@ export class UpdateTeamJob {
         private readonly teamService: TeamService, private readonly logger: Logger) { }
 
     async parseAndUpdateTeams() {
-
-        let testTeams = []
-        let odiTeams = []
-        let t20Teams = []
-
         const ratingUrl = 'http://www.espncricinfo.com/rankings/content/page/211271.html';
-        console.log(ratingUrl)
         request(ratingUrl, (err, resp, body) => {
             if (err)
                 throw err;
