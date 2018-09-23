@@ -16,31 +16,35 @@ export class TeamService {
     }
 
     async saveTeam(form: TeamForm): Promise<Team> {
-        const user = new this.Team(form);
-        return await user.save();
+        let team = await this.Team.findOne({ name: form.name });
+        console.log(team)
+        if (team == null) {
+            const newTeam = new this.Team(form);
+            return await newTeam.save();
+        }
     }
 
     async updateTeam(form: TeamForm): Promise<Team> {
-        const Team = await this.Team.findById(form.id);
-        if (Team == null) {
+        const team = await this.Team.findById(form.id);
+        if (team == null) {
             throw new AppError('Invalid Team')
         }
         return await this.Team.findOneAndUpdate({ _id: form.id }, form);
     }
 
-    async getTeamById(userId: String): Promise<Team> {
-        const user = await this.Team.findById(userId);
-        if (user == null) {
+    async getTeamById(teamId: String): Promise<Team> {
+        const team = await this.Team.findById(teamId);
+        if (team == null) {
             throw new AppError('Invalid Team')
         }
-        return user;
+        return team;
     }
 
-    async deleteTeam(userId: Number) {
-        const user = await this.Team.findById(userId);
-        if (user == null) {
+    async deleteTeam(teamId: Number) {
+        const team = await this.Team.findById(teamId);
+        if (team == null) {
             throw new AppError('Invalid Team')
         }
-        await this.Team.findByIdAndDelete({ _id: userId });
+        await this.Team.findByIdAndDelete({ _id: teamId });
     }
 }
