@@ -12,12 +12,19 @@ import { PlayerService } from './player/service/PlayerService';
 import { PlayerProvider } from './player/providers/PlayerProvider';
 import { GetLiveScoreScheduler } from './score/scheduler/GetLiveScoreScheduler';
 import { GetLiveScoreJob } from './score/job/GetLiveScoreJob';
+import { SeriesService } from './series/service/SeriesService';
+import { SeriesController } from './series/controller/SeriesController';
+import { PlayerController } from './player/controller/PlayerController';
+import { UpdateSeriesScheduler } from './series/scheduler/UpdateSeriesScheduler';
+import { UpdateSeriesJob } from './series/job/UpdateSeriesJob';
+import { SeriesProvider } from './series/providers/SeriesProvider';
 
 @Module({
   imports: [DatabaseModule, LoggerModule, CommonModule, CacheModule.register()],
-  controllers: [TeamController,],
+  controllers: [TeamController, PlayerController, SeriesController],
   providers: [TeamService, UpdateTeamScheduler, UpdateTeamJob, ...TeamProvider,
     PlayerService, UpdateTeamScheduler, UpdatePlayerJob, ...PlayerProvider,
-    GetLiveScoreScheduler, GetLiveScoreJob],
+    GetLiveScoreScheduler, GetLiveScoreJob,
+    SeriesService, UpdateSeriesScheduler, UpdateSeriesJob, ...SeriesProvider],
 })
 export class CricketModule { }

@@ -9,9 +9,9 @@ export class GetLiveScoreScheduler extends NestSchedule {
         super();
     }
 
-    @Interval(10000)
+    //@Interval(10000)
     intervalJob() {
         this.getLiveScoreJob.parseAndGetLiveScore();
-        return false;
+        return true;
     }
 }

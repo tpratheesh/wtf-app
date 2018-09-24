@@ -2,15 +2,20 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Logger } from 'logger/Logger';
 import * as request from 'request';
 import * as cheerio from 'cheerio';
+import { ConfigService } from 'config/ConfigService';
 
 @Injectable()
 export class GetLiveScoreJob {
+    private readonly baseUrl;
+
     constructor(
-        private readonly logger: Logger) { }
+        private readonly config: ConfigService,
+        private readonly logger: Logger) {
+        this.baseUrl = config.get('BASE_URL')
+    }
     async parseAndGetLiveScore() {
         console.log('GetLiveScoreJob job');
-        const url = 'http://www.espncricinfo.com/scores';
-        const base_url = 'http://www.espncricinfo.com/';
+        const url = this.baseUrl + '/scores';
 
         request(url, (err, resp, body) => {
             if (err)

@@ -4,14 +4,21 @@ import TeamForm from '../form/TeamForm';
 import { TeamService } from '../service/TeamService';
 import * as request from 'request';
 import * as cheerio from 'cheerio';
+import { ConfigService } from 'config/ConfigService';
 
 @Injectable()
 export class UpdateTeamJob {
+    private readonly baseUrl;
+
     constructor(
-        private readonly teamService: TeamService, private readonly logger: Logger) { }
+        private readonly teamService: TeamService,
+        private readonly config: ConfigService,
+        private readonly logger: Logger) {
+        this.baseUrl = this.config.get('BASE_URL')
+    }
 
     async parseAndUpdateTeams() {
-        const ratingUrl = 'http://www.espncricinfo.com/rankings/content/page/211271.html';
+        const ratingUrl = this.baseUrl + '/rankings/content/page/211271.html';
         request(ratingUrl, (err, resp, body) => {
             if (err)
                 throw err;
@@ -61,7 +68,7 @@ export class UpdateTeamJob {
                     }
                 });
 
-            const url = 'http://www.espncricinfo.com/story/_/id/18791072/all-cricket-teams-index';
+            const url = this.baseUrl + '/story/_/id/18791072/all-cricket-teams-index';
 
             request(url, (err, resp, body) => {
                 if (err)

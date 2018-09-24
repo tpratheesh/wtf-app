@@ -9,7 +9,7 @@ export class UpdateTeamScheduler extends NestSchedule {
         super();
     }
 
-    @Cron('0 0 4 * *')
+    @Interval(2000)
     intervalJob() {
         console.log('UpdateTeamScheduler job');
         this.updateTeamJob.parseAndUpdateTeams();
