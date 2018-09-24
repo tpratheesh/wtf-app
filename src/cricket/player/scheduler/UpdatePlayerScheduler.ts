@@ -9,7 +9,7 @@ export class UpdatePlayerScheduler extends NestSchedule {
         super();
     }
 
-    @Cron('0 0 4 * *')
+    //@Cron('0 0 4 * *')
     intervalJob() {
         console.log('UpdatePlayerScheduler job');
         this.updatePlayerJob.parseAndUpdatePlayers();

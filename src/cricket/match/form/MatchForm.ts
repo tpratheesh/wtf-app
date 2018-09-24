@@ -1,17 +1,20 @@
 import { IsNotEmpty } from 'class-validator';
 
-export default class SeriesForm {
+export default class MatchForm {
     id: String
     @IsNotEmpty()
     name: String
     description: String
-    seriesUrl: String
+    series: String
+    matchDate: Date
     createdDate: Date
     updatedDate: Date
 
-    constructor(name, description) {
+    constructor(name, description, series, matchDate) {
         this.name = name;
         this.description = description;
+        this.series = series;
+        this.matchDate = matchDate
         if (this.createdDate == null) {
             this.createdDate = new Date();
         }

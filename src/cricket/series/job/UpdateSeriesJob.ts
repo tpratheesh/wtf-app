@@ -41,6 +41,7 @@ export class UpdateSeriesJob {
     async processSeriesList(seriesList) {
         seriesList.forEach((series) => {
             let form = new SeriesForm(series.name, series.name);
+            form.seriesUrl = series.link
             this.seriesService.saveSeries(form);
         });
     }
