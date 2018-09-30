@@ -10,8 +10,6 @@ import { UpdateTeamJob } from './team/job/UpdateTeamJob';
 import { UpdatePlayerJob } from './player/job/UpdatePlayerJob';
 import { PlayerService } from './player/service/PlayerService';
 import { PlayerProvider } from './player/providers/PlayerProvider';
-import { GetLiveScoreScheduler } from './score/scheduler/GetLiveScoreScheduler';
-import { GetLiveScoreJob } from './score/job/GetLiveScoreJob';
 import { SeriesService } from './series/service/SeriesService';
 import { SeriesController } from './series/controller/SeriesController';
 import { PlayerController } from './player/controller/PlayerController';
@@ -23,13 +21,13 @@ import { UpdateMatchJob } from './match/job/UpdateMatchJob';
 import { MatchProvider } from './match/providers/MatchProvider';
 import { UpdateMatchScheduler } from './match/scheduler/UpdateMatchScheduler';
 import { MatchController } from './match/controller/MatchController';
+import { UpdatePlayerScheduler } from './player/scheduler/UpdatePlayerScheduler';
 
 @Module({
   imports: [DatabaseModule, LoggerModule, CommonModule, CacheModule.register()],
   controllers: [TeamController, PlayerController, SeriesController, MatchController],
   providers: [TeamService, UpdateTeamScheduler, UpdateTeamJob, ...TeamProvider,
-    PlayerService, UpdateTeamScheduler, UpdatePlayerJob, ...PlayerProvider,
-    GetLiveScoreScheduler, GetLiveScoreJob,
+    PlayerService, UpdatePlayerScheduler, UpdatePlayerJob, ...PlayerProvider,
     SeriesService, UpdateSeriesScheduler, UpdateSeriesJob, ...SeriesProvider,
     MatchService, UpdateMatchScheduler, UpdateMatchJob, ...MatchProvider
   ],

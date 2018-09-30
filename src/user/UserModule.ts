@@ -5,12 +5,17 @@ import { DatabaseModule } from 'db/DatabaseModule';
 import { UserProvider } from './providers/UserProvider';
 import { LoggerModule } from 'logger/LoggerModule';
 import { CommonModule } from 'common/CommonModule';
+import { UserAccountModule } from 'useraccount/UserAccountModule';
+import { UserSettingProvider } from './providers/UserSettingProvider';
+import { UserSettingService } from './service/UserSettingService';
+import { UserSettingController } from './controller/UserSettingController';
 
 @Module({
-  imports: [DatabaseModule, LoggerModule, CommonModule, CacheModule.register()],
-  controllers: [UserController,],
-  providers: [UserService,
+  imports: [DatabaseModule, LoggerModule, CommonModule, UserAccountModule , CacheModule.register()],
+  controllers: [UserController, UserSettingController,],
+  providers: [UserService, UserSettingService,
     ...UserProvider,
+    ...UserSettingProvider
   ],
   exports: [UserService,]
 })

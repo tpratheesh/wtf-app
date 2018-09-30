@@ -4,13 +4,19 @@ import { User } from '../interface/User';
 import UserForm from '../form/UserForm';
 import AppError from 'exception/AppError';
 import { Logger } from 'logger/Logger';
+import { UserAccountService } from 'useraccount/service/UserAccountService';
+import UserAccountForm from 'useraccount/form/UserAccountForm';
+import { UserSettingService } from './UserSettingService';
 
 @Injectable()
 export class UserService {
 
   constructor(
     @Inject('UserModelToken')
-    private readonly User: Model<User>, private readonly logger: Logger) { }
+    private readonly User: Model<User>,
+    private readonly userAccountService: UserAccountService,
+    private readonly userSettingService: UserSettingService,
+    private readonly logger: Logger) { }
 
   async getUsers(): Promise<User[]> {
     return await this.User.find();
@@ -48,7 +54,11 @@ export class UserService {
   async findUserByMobileNo(mobileNo: String): Promise<User> {
     let user = await this.User.findOne({ mobileNo: mobileNo })
     if (user == null) {
-      user = await this.saveUser(new UserForm(mobileNo))
+      user = await this.saveUser(new UserForm(mobileNo));
+      let form = new UserAccountForm('default', 'Default Account created for all Users');
+      form.user = user._id
+      const userAccount = await this.userAccountService.saveUserAccount(form);
+      this.userSettingService.createUserSettings(user._id, userAccount._id);
     }
     return user;
   }
