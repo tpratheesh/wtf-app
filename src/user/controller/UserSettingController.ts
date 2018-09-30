@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
-import { UserService } from '../service/UserService';
 import handleError from 'utils/ErrorHandler';
 import { Logger } from 'logger/Logger';
 import { UserSettingService } from '../service/UserSettingService';
@@ -18,11 +17,20 @@ export class UserSettingController {
   }
 
   @Post('usersetting/selectedUserAccount/update/:value')
-  async updateUserSetting(@Req() req, @Param() params): Promise<any> {
+  async updateSelectedUserAccount(@Req() req, @Param() params): Promise<any> {
     const userName = req.user.name
     const userId = req.user._id
     this.logger.log('User ' + userName + ' requesting update user setting')
     return await this.userSettingService.updateSelectedUserAccount(userId, params.value)
+      .catch(error => handleError(error));
+  }
+
+  @Post('usersetting/selectedTheme/update/:value')
+  async updateSelectedTheme(@Req() req, @Param() params): Promise<any> {
+    const userName = req.user.name
+    const userId = req.user._id
+    this.logger.log('User ' + userName + ' requesting update user setting')
+    return await this.userSettingService.updateSelectedTheme(userId, params.value)
       .catch(error => handleError(error));
   }
 }

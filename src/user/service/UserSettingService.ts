@@ -34,4 +34,14 @@ export class UserSettingService {
     userSetting.save();
     return await this.getUserSettings(userId);
   }
+
+  async updateSelectedTheme(userId: String, selectedTheme: String): Promise<UserSetting> {
+    let userSetting = await this.getUserSettings(userId);
+    if (userSetting == null) {
+      throw new AppError('Invalid User')
+    }
+    userSetting.selectedTheme = selectedTheme;
+    userSetting.save();
+    return await this.getUserSettings(userId);
+  }
 }
