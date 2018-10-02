@@ -16,32 +16,33 @@ export class SeriesService {
     }
 
     async saveSeries(form: SeriesForm): Promise<Series> {
-        let match = await this.Series.findOne({ name: form.name });
-        if (match == null) {
+        let series = await this.Series.findOne({ name: form.name });
+        if (series == null) {
             const newSeries = new this.Series(form);
             return await newSeries.save();
         }
+        return series;
     }
 
     async updateSeries(form: SeriesForm): Promise<Series> {
-        const match = await this.Series.findById(form.id);
-        if (match == null) {
+        const series = await this.Series.findById(form.id);
+        if (series == null) {
             throw new AppError('Invalid Series')
         }
         return await this.Series.findOneAndUpdate({ _id: form.id }, form);
     }
 
     async getSeriesById(matchId: String): Promise<Series> {
-        const match = await this.Series.findById(matchId);
-        if (match == null) {
+        const series = await this.Series.findById(matchId);
+        if (series == null) {
             throw new AppError('Invalid Series')
         }
-        return match;
+        return series;
     }
 
     async deleteSeries(matchId: Number) {
-        const match = await this.Series.findById(matchId);
-        if (match == null) {
+        const series = await this.Series.findById(matchId);
+        if (series == null) {
             throw new AppError('Invalid Series')
         }
         await this.Series.findByIdAndDelete({ _id: matchId });

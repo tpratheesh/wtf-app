@@ -4,6 +4,7 @@ import AppError from 'exception/AppError';
 import { Logger } from 'logger/Logger';
 import { Match } from '../interface/Match';
 import MatchForm from '../form/MatchForm';
+import * as moment from 'moment';
 
 @Injectable()
 export class MatchService {
@@ -13,6 +14,19 @@ export class MatchService {
 
     async getMatchListBySeries(seriesId: String): Promise<Match[]> {
         return await this.Match.find({ series: seriesId });
+    }
+
+    async getMatchListToday(): Promise<Match[]> {
+        const today = moment().startOf('day')
+        const tomorrow = moment(today).endOf('day')
+        console.log(today)
+        console.log(tomorrow)
+        return await this.Match.find({
+            matchDate: {
+                $gte: today.toDate(),
+                $lt: tomorrow.toDate()
+            }
+        });
     }
 
     async saveMatch(form: MatchForm): Promise<Match> {

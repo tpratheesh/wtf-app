@@ -94,8 +94,8 @@ export class UpdateTeamJob {
                     if (t20Teams.indexOf(teamName) > -1) {
                         isT20 = true
                     }
-                    const teamForm = new TeamForm(teamName, isTest, isODI, isT20);
-                    this.teamService.saveTeam(teamForm);
+                    // const teamForm = new TeamForm(teamName, isTest, isODI, isT20);
+                    // this.teamService.saveTeam(teamForm);
                 });
             });
 

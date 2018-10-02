@@ -17,11 +17,11 @@ export class TeamService {
 
     async saveTeam(form: TeamForm): Promise<Team> {
         let team = await this.Team.findOne({ name: form.name });
-        //console.log(team.id)
         if (team == null) {
             const newTeam = new this.Team(form);
             return await newTeam.save();
         }
+        return team;
     }
 
     async updateTeam(form: TeamForm): Promise<Team> {
@@ -36,6 +36,15 @@ export class TeamService {
         const team = await this.Team.findById(teamId);
         if (team == null) {
             throw new AppError('Invalid Team')
+        }
+        return team;
+    }
+
+    async getTeamByName(name: String): Promise<Team> {
+        const team = await this.Team.findOne({ name: name });
+        if (team == null) {
+            console.log("Team is null " + name)
+            return null;
         }
         return team;
     }

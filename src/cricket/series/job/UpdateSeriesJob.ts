@@ -34,15 +34,14 @@ export class UpdateSeriesJob {
             $('ul li a', futureSeriesDiv).each(function () {
                 seriesList.push({ 'name': $(this).text(), 'link': $(this).attr('href') })
             });
-            this.processSeriesList(seriesList)
+            seriesList.reduce((promiseChain, arrayItem) =>
+                promiseChain.then(() => this.processSeries(arrayItem)), Promise.resolve());
         })
     }
 
-    async processSeriesList(seriesList) {
-        seriesList.forEach((series) => {
-            let form = new SeriesForm(series.name, series.name);
-            form.seriesUrl = series.link
-            this.seriesService.saveSeries(form);
-        });
+    async processSeries(series) {
+        let form = new SeriesForm(series.name, series.name);
+        form.seriesUrl = series.link
+        this.seriesService.saveSeries(form);
     }
 }

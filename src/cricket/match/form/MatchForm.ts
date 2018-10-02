@@ -6,15 +6,21 @@ export default class MatchForm {
     name: String
     description: String
     series: String
-    matchDate: Date
+    matchStartDate: Date
+    matchEndDate: Date
+    team1: String
+    team2: String
     createdDate: Date
     updatedDate: Date
 
-    constructor(name, description, series, matchDate) {
+    constructor(name, description, series, matchStartDate, matchEndDate, team1, team2) {
         this.name = name;
         this.description = description;
         this.series = series;
-        this.matchDate = matchDate
+        this.matchStartDate = matchStartDate;
+        this.matchEndDate = matchEndDate;
+        this.team1 = team1;
+        this.team2 = team2;
         if (this.createdDate == null) {
             this.createdDate = new Date();
         }
