@@ -5,7 +5,7 @@ export interface User extends Document {
     readonly mobileNo: String
     readonly userType: String
     readonly description: String
-    readonly photos: Buffer[]
+    readonly photo: Buffer
     readonly createdBy: String
     readonly createdDate: Date
     readonly updatedDate: Date

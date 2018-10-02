@@ -6,6 +6,7 @@ export default class UserForm {
     mobileNo: String
     name: String
     description: String
+    photo: Buffer
     createdBy: String
     createdDate: Date
     updatedDate: Date

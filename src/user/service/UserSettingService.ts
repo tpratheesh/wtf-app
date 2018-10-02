@@ -28,20 +28,20 @@ export class UserSettingService {
   async updateSelectedUserAccount(userId: String, selectedUserAccount: String): Promise<UserSetting> {
     let userSetting = await this.getUserSettings(userId);
     if (userSetting == null) {
-      throw new AppError('Invalid User')
+      throw new AppError('Invalid User Setting')
     }
     userSetting.selectedUserAccount = selectedUserAccount;
-    userSetting.save();
+    await userSetting.save();
     return await this.getUserSettings(userId);
   }
 
   async updateSelectedTheme(userId: String, selectedTheme: String): Promise<UserSetting> {
     let userSetting = await this.getUserSettings(userId);
     if (userSetting == null) {
-      throw new AppError('Invalid User')
+      throw new AppError('Invalid User Setting')
     }
     userSetting.selectedTheme = selectedTheme;
-    userSetting.save();
+    await userSetting.save();
     return await this.getUserSettings(userId);
   }
 }
