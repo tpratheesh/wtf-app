@@ -17,11 +17,11 @@ export class PlayerService {
 
     async savePlayer(form: PlayerForm): Promise<Player> {
         let player = await this.Player.findOne({ name: form.name });
-        console.log(player)
         if (player == null) {
             const newPlayer = new this.Player(form);
             return await newPlayer.save();
         }
+        return player;
     }
 
     async updatePlayer(form: PlayerForm): Promise<Player> {

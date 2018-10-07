@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseInterceptors, FilesInterceptor, UploadedFiles, FileInterceptor, UploadedFile } from '@nestjs/common';
 import { UserService } from '../service/UserService';
 import handleError from 'utils/ErrorHandler';
 import UserForm from '../form/UserForm';
@@ -51,5 +51,13 @@ export class UserController {
     await this.userService.deleteUser(params.id)
       .catch(error => handleError(error));
     return new SuccessResponse('User Deleted Successfully');
+  }
+
+  @Post('user/photo/update')
+  async updatePhoto(@Req() req, @Body() photo: String): Promise<SuccessResponse> {
+    console.log(photo)
+    const userName = req.user.name
+    this.logger.log('User ' + userName + ' requesting update user photo')
+    return new SuccessResponse('User Profile Updated Successfully');
   }
 }

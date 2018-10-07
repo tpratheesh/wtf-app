@@ -4,12 +4,14 @@ export default class PlayerForm {
     id: String
     @IsNotEmpty()
     name: String
+    playerUrl: String
     createdDate: Date
     updatedDate: Date
     active: boolean
 
-    constructor(name) {
+    constructor(name, playerUrl) {
         this.name = name;
+        this.playerUrl = playerUrl
         if (this.createdDate == null) {
             this.createdDate = new Date();
         }
