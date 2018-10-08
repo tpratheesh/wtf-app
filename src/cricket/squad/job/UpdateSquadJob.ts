@@ -27,8 +27,8 @@ export class UpdateSquadJob {
     }
 
     async parseAndUpdateSquadList() {
-        console.log('Updating match details...');
-        let seriesList = await this.seriesService.getSeriesList();
+        console.log('Updating squad details...');
+        //let seriesList = await this.seriesService.getSeriesList();
         // seriesList.reduce((promiseChain, arrayItem) =>
         //     promiseChain.then(() => this.getMatchDetails(arrayItem)), Promise.resolve());
     }
