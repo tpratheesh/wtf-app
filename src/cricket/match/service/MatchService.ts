@@ -13,7 +13,21 @@ export class MatchService {
         private readonly Match: Model<Match>, private readonly logger: Logger) { }
 
     async getMatchListBySeries(seriesId: String): Promise<Match[]> {
-        return await this.Match.find({ series: seriesId });
+        return await this.Match.find({ series: seriesId })
+            .populate({
+                path: 'squad1', select: 'players',
+                populate: {
+                    path: 'team', select: ['name', 'shortName'],
+                    model: 'Team'
+                }
+            })
+            .populate({
+                path: 'squad2', select: 'players',
+                populate: {
+                    path: 'team', select: ['name', 'shortName'],
+                    model: 'Team'
+                },
+            });
     }
 
     async getMatchListToday(): Promise<Match[]> {
@@ -34,6 +48,9 @@ export class MatchService {
         if (match == null) {
             const newMatch = new this.Match(form);
             return await newMatch.save();
+        } else {
+            form.id = match._id;
+            return await this.updateMatch(form);
         }
     }
 

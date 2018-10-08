@@ -9,6 +9,8 @@ import { SeriesService } from '../../series/service/SeriesService';
 import { TeamService } from '../../team/service/TeamService';
 import TeamForm from '../../team/form/TeamForm';
 import * as moment from 'moment';
+import SquadForm from '../../squad/form/SquadForm';
+import { SquadService } from '../../squad/service/SquadService';
 
 @Injectable()
 export class UpdateMatchJob {
@@ -18,6 +20,7 @@ export class UpdateMatchJob {
         private readonly matchService: MatchService,
         private readonly teamService: TeamService,
         private readonly seriesService: SeriesService,
+        private readonly squadService: SquadService,
         private readonly config: ConfigService,
         private readonly logger: Logger) {
         this.baseUrl = this.config.get('BASE_URL')
@@ -157,10 +160,13 @@ export class UpdateMatchJob {
         if (team1 == null) {
             team1 = await this.teamService.saveTeam(new TeamForm(match.team1Name, match.team1ShortName));
         }
+        let squad1 = await this.squadService.saveSquad(new SquadForm(team1._id));
+
         let team2 = await this.teamService.getTeamByName(match.team2Name);
         if (team2 == null) {
             team2 = await this.teamService.saveTeam(new TeamForm(match.team2Name, match.team2ShortName));
         }
+        let squad2 = await this.squadService.saveSquad(new SquadForm(team2._id));
 
         const form = new MatchForm(
             match.name,
@@ -168,8 +174,8 @@ export class UpdateMatchJob {
             match.series,
             match.matchStartDate,
             match.matchEndDate,
-            team1._id,
-            team2._id);
+            squad1._id,
+            squad2._id);
         await this.matchService.saveMatch(form);
     }
 }
