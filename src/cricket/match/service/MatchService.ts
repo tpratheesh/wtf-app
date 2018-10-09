@@ -31,16 +31,21 @@ export class MatchService {
     }
 
     async getMatchListToday(): Promise<Match[]> {
-        const today = moment().startOf('day')
-        const tomorrow = moment(today).endOf('day')
-        console.log(today)
-        console.log(tomorrow)
-        return await this.Match.find({
-            matchDate: {
-                $gte: today.toDate(),
-                $lt: tomorrow.toDate()
-            }
-        });
+        const today = moment().utc(false).startOf('day')
+        const tomorrow = moment(today).utc(false).endOf('day')
+        console.log(today.toDate())
+        console.log(tomorrow.toDate())
+        return await this.Match.find(
+            {
+                $and: [{
+                    matchStartDate: {
+                        $gte: today.toDate(),
+                    },
+                    matchEndDate: {
+                        $gt: tomorrow.toDate()
+                    }
+                }]
+            });
     }
 
     async saveMatch(form: MatchForm): Promise<Match> {

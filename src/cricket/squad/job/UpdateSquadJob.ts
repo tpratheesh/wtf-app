@@ -11,6 +11,7 @@ import TeamForm from '../../team/form/TeamForm';
 import * as moment from 'moment';
 import SquadForm from '../form/SquadForm';
 import { SquadService } from '../service/SquadService';
+import { Match } from '../../match/interface/Match';
 
 @Injectable()
 export class UpdateSquadJob {
@@ -28,8 +29,14 @@ export class UpdateSquadJob {
 
     async parseAndUpdateSquadList() {
         console.log('Updating squad details...');
-        //let seriesList = await this.seriesService.getSeriesList();
-        // seriesList.reduce((promiseChain, arrayItem) =>
-        //     promiseChain.then(() => this.getMatchDetails(arrayItem)), Promise.resolve());
+        let matchesList = await this.matchService.getMatchListToday();
+        console.log(matchesList.length)
+        matchesList.reduce((promiseChain, arrayItem) =>
+            promiseChain.then(() => this.updateMatchSquads(arrayItem)), Promise.resolve());
+    }
+
+    async updateMatchSquads(match: Match) {
+        const matchUrl = match.matchUrl;
+        console.log(matchUrl)
     }
 }

@@ -8,6 +8,7 @@ export interface Match extends Document {
     readonly matchEndDate: Date
     readonly squad1: String
     readonly squad2: String
+    readonly matchUrl: String
     readonly createdDate: Date
     readonly updatedDate: Date
 }

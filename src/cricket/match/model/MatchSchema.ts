@@ -9,6 +9,7 @@ export const MatchSchema = new mongoose.Schema({
     matchEndDate: mongoose.Schema.Types.Date,
     squad1: { type: mongoose.Schema.Types.ObjectId, ref: 'Squad' },
     squad2: { type: mongoose.Schema.Types.ObjectId, ref: 'Squad' },
+    matchUrl: String,
     createdDate: { type: mongoose.Schema.Types.Date, default: Date.now },
     updatedDate: { type: mongoose.Schema.Types.Date, default: Date.now },
 });

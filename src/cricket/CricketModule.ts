@@ -24,6 +24,8 @@ import { MatchController } from './match/controller/MatchController';
 import { UpdatePlayerScheduler } from './player/scheduler/UpdatePlayerScheduler';
 import { SquadService } from './squad/service/SquadService';
 import { SquadProvider } from './squad/providers/SquadProvider';
+import { UpdateSquadScheduler } from './squad/scheduler/UpdateSquadScheduler';
+import { UpdateSquadJob } from './squad/job/UpdateSquadJob';
 
 @Module({
   imports: [DatabaseModule, LoggerModule, CommonModule, CacheModule.register()],
@@ -32,7 +34,7 @@ import { SquadProvider } from './squad/providers/SquadProvider';
     PlayerService, UpdatePlayerScheduler, UpdatePlayerJob, ...PlayerProvider,
     SeriesService, UpdateSeriesScheduler, UpdateSeriesJob, ...SeriesProvider,
     MatchService, UpdateMatchScheduler, UpdateMatchJob, ...MatchProvider,
-    SquadService, ...SquadProvider
+    SquadService, UpdateSquadScheduler, UpdateSquadJob, ...SquadProvider
   ],
 })
 export class CricketModule { }

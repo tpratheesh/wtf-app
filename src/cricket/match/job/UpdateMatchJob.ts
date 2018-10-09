@@ -138,6 +138,11 @@ export class UpdateMatchJob {
                 matchStartDate = moment(dateStartDate + ' ' + startDateMonth + ' ' + startDateYear + ' ' + startDateTime).utc(false).toDate();
                 matchEndDate = moment(dateEndDate + ' ' + endDateMonth + ' ' + endDateYear + ' 11:59 PM').utc(false).toDate();
                 console.log(matchStartDate, matchEndDate)
+
+                const summaryBtn = $('div.cscore_buttonGroup ul.cscore_list li', $(this))[0];
+                const matchUrl = $('a', summaryBtn).attr('href');
+                console.log(matchUrl);
+
                 matches.push({
                     name: match,
                     description: match,
@@ -147,7 +152,8 @@ export class UpdateMatchJob {
                     team1Name,
                     team2Name,
                     team1ShortName,
-                    team2ShortName
+                    team2ShortName,
+                    matchUrl
                 });
             });
             matches.reduce((promiseChain, arrayItem) =>
@@ -175,7 +181,8 @@ export class UpdateMatchJob {
             match.matchStartDate,
             match.matchEndDate,
             squad1._id,
-            squad2._id);
+            squad2._id,
+            match.matchUrl);
         await this.matchService.saveMatch(form);
     }
 }
