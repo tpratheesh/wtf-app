@@ -31,6 +31,7 @@
     "fastify-formbody": "^2.0.0",
     "helmet": "^3.13.0",
     "mongoose": "^5.2.16",
+    "mongoose-autopopulate": "^0.8.1",
     "nest-schedule": "^0.3.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",

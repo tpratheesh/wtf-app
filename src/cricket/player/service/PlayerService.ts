@@ -40,11 +40,19 @@ export class PlayerService {
         return player;
     }
 
-    async deletePlayer(playerId: Number) {
+    async deletePlayer(playerId: String) {
         const player = await this.Player.findById(playerId);
         if (player == null) {
             throw new AppError('Invalid Player')
         }
         await this.Player.findByIdAndDelete({ _id: playerId });
+    }
+
+    async getPlayerByName(playerName: String) {
+        let player = await this.Player.findOne({ name: playerName.trim() });
+        if (player == null) {
+            player = await this.savePlayer(new PlayerForm(playerName, ''))
+        }
+        return player;
     }
 }

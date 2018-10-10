@@ -26,6 +26,14 @@ export class MatchController {
             .catch(error => handleError(error));
     }
 
+    @Get('match/upcoming')
+    async matchListUpcoming(@Req() req): Promise<any> {
+        const userName = req.user.name
+        this.logger.log('User ' + userName + ' requesting upcoming match list')
+        return await this.matchService.getMatchListUpcoming()
+            .catch(error => handleError(error));
+    }
+
     @Put('match')
     async createMatch(@Req() req, @Body() matchForm: MatchForm): Promise<SuccessResponse> {
         const userName = req.user.name

@@ -13,28 +13,12 @@ export class MatchService {
         private readonly Match: Model<Match>, private readonly logger: Logger) { }
 
     async getMatchListBySeries(seriesId: String): Promise<Match[]> {
-        return await this.Match.find({ series: seriesId })
-            .populate({
-                path: 'squad1', select: 'players',
-                populate: {
-                    path: 'team', select: ['name', 'shortName'],
-                    model: 'Team'
-                }
-            })
-            .populate({
-                path: 'squad2', select: 'players',
-                populate: {
-                    path: 'team', select: ['name', 'shortName'],
-                    model: 'Team'
-                },
-            });
+        return await this.Match.find({ series: seriesId });
     }
 
     async getMatchListToday(): Promise<Match[]> {
         const today = moment().utc(false).startOf('day')
         const tomorrow = moment(today).utc(false).endOf('day')
-        console.log(today.toDate())
-        console.log(tomorrow.toDate())
         return await this.Match.find(
             {
                 $and: [{
@@ -42,10 +26,26 @@ export class MatchService {
                         $gte: today.toDate(),
                     },
                     matchEndDate: {
-                        $gt: tomorrow.toDate()
+                        $lt: tomorrow.toDate()
                     }
                 }]
-            });
+            }).sort({ matchStartDate: 'asc' });
+    }
+
+    async getMatchListUpcoming(): Promise<Match[]> {
+        const today = moment().utc(false)
+        const tomorrow = moment(today).utc(false).endOf('day').add(2, 'days');
+        return await this.Match.find(
+            {
+                $and: [{
+                    matchStartDate: {
+                        $gte: today.toDate(),
+                    },
+                    matchEndDate: {
+                        $lt: tomorrow.toDate()
+                    }
+                }]
+            }).sort({ matchStartDate: 'asc' });
     }
 
     async saveMatch(form: MatchForm): Promise<Match> {

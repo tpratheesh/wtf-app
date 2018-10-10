@@ -10,7 +10,7 @@ export class UpdatePlayerJob {
         private readonly playerService: PlayerService, private readonly logger: Logger) { }
 
     async parseAndUpdatePlayers() {
-        const url = 'http://www.espncricinfo.com/pakistan/content/player/country.html?country=7';
+        const url = 'http://www.espncricinfo.com/afghanistan/content/player/country.html?country=40';
         request(url, (err, resp, body) => {
             if (err)
                 throw err;
