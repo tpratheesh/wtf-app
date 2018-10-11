@@ -9,7 +9,7 @@ export default class PlayerForm {
     updatedDate: Date
     active: boolean
 
-    constructor(name, playerUrl) {
+    constructor(name, playerUrl = '') {
         this.name = name;
         this.playerUrl = playerUrl
         if (this.createdDate == null) {

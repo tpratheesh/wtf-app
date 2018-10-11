@@ -6,13 +6,16 @@ import { Squad } from '../interface/Squad';
 import SquadForm from '../form/SquadForm';
 import SquadUpdateForm from '../form/SquadUpdateForm';
 import { PlayerService } from 'cricket/player/service/PlayerService';
-import * as mongoose from 'mongoose';
+import { SquadPlayer } from '../interface/SquadPlayer';
+import SquadPlayerForm from '../form/SquadPlayerForm';
 
 @Injectable()
 export class SquadService {
     constructor(
         @Inject('SquadModelToken')
         private readonly Squad: Model<Squad>,
+        @Inject('SquadPlayerModelToken')
+        private readonly SquadPlayer: Model<SquadPlayer>,
         private readonly playerService: PlayerService,
         private readonly logger: Logger) { }
 
@@ -49,15 +52,29 @@ export class SquadService {
         await this.Squad.findByIdAndDelete({ _id: squadId });
     }
 
-    async updateSquadPlayers(form: SquadUpdateForm) {
-        let players = [];
+    async updateSquadPlayers(squadId: String, form: SquadUpdateForm) {
+        let squadPlayers: Array<SquadPlayer> = [];
 
         for (let i = 0; i < form.players.length; i++) {
-            let player = form.players[i];
-            const p = await this.playerService.getPlayerByName(player.name.toString());
-            players.push({ _id: p._id, role: player.role, isPlaying: player.isPlaying });
+            const squadPlayerForm: SquadPlayerForm = form.players[i];
+            const playerName = squadPlayerForm.player.name;
+
+            let player = await this.playerService.getPlayerByName(playerName);
+            if (player == null) {
+                player = await this.playerService.savePlayer(squadPlayerForm.player);
+            }
+            let squadPlayer = await this.SquadPlayer.findOne({ player: player, squad: squadId });
+            if (squadPlayer == null) {
+                const newSquadPlayer = new this.SquadPlayer(form);
+                squadPlayer = await newSquadPlayer.save();
+                squadPlayer = await this.SquadPlayer.findByIdAndUpdate(squadPlayer._id, { player: player, role: squadPlayerForm.role, isPlaying: squadPlayerForm.isPlaying });
+            } else {
+                squadPlayer = await this.SquadPlayer.findByIdAndUpdate(squadPlayer._id, { player: player, role: squadPlayerForm.role, isPlaying: squadPlayerForm.isPlaying });
+            }
+            console.log(squadPlayer)
+            squadPlayers.push(squadPlayer);
         }
-        await this.updatePlayers(form.id, players);
+        await this.updatePlayers(squadId, squadPlayers);
     }
 
     async updatePlayers(squadId, players) {

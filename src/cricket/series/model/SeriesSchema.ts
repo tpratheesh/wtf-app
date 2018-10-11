@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 
 export const SeriesSchema = new mongoose.Schema({
-    id: String,
     name: String,
     description: String,
     seriesUrl: String,

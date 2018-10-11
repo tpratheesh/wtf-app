@@ -1,5 +1,4 @@
 import { IsNotEmpty } from 'class-validator';
-import SquadForm from '../../squad/form/SquadForm';
 
 export default class MatchForm {
     id: String

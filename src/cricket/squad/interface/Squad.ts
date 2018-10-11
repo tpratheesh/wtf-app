@@ -1,12 +1,10 @@
 import { Document } from 'mongoose';
+import { Team } from 'cricket/team/interface/Team';
+import { SquadPlayer } from './SquadPlayer';
 
 export interface Squad extends Document {
-    team: String
-    readonly players: [{
-        _id: String,
-        role: String,
-        isPlaying: boolean
-    }]
+    readonly team: Team
+    readonly players: [SquadPlayer]
     readonly createdDate: Date
     readonly updatedDate: Date
 }

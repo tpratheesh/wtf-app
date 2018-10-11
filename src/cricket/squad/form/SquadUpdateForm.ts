@@ -1,15 +1,9 @@
-import { IsNotEmpty } from 'class-validator';
+import SquadPlayerForm from "./SquadPlayerForm";
 
 export default class SquadUpdateForm {
-    id: String
-    players: {
-        name: String,
-        role: String,
-        isPlaying: { type: Boolean, default: false }
-    }[]
+    players: [SquadPlayerForm]
 
-    constructor(id, players) {
-        this.id = id;
+    constructor(players) {
         this.players = players;
     }
 }

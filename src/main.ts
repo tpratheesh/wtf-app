@@ -9,7 +9,7 @@ import { AppModule } from 'AppModule';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: false,
+    //logger: false,
   });
   app.useGlobalFilters(new RestExceptionFilter(), new ForbiddenExceptionHandler());
   app.use(ApiFilter);

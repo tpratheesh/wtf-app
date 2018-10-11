@@ -48,7 +48,7 @@ export class PlayerService {
         await this.Player.findByIdAndDelete({ _id: playerId });
     }
 
-    async getPlayerByName(playerName: String) {
+    async getPlayerByName(playerName: String): Promise<Player> {
         let player = await this.Player.findOne({ name: playerName.trim() });
         if (player == null) {
             player = await this.savePlayer(new PlayerForm(playerName, ''))

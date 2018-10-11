@@ -2,7 +2,6 @@ import * as mongoose from 'mongoose';
 import * as autopopulate from 'mongoose-autopopulate';
 
 export const MatchSchema = new mongoose.Schema({
-    id: String,
     name: String,
     description: String,
     series: { type: mongoose.Schema.Types.ObjectId, ref: 'Series', autopopulate: { select: 'name' } },

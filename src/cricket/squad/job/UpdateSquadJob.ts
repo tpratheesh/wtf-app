@@ -13,6 +13,8 @@ import SquadForm from '../form/SquadForm';
 import { SquadService } from '../service/SquadService';
 import { Match } from '../../match/interface/Match';
 import SquadUpdateForm from '../form/SquadUpdateForm';
+import SquadPlayerForm from '../form/SquadPlayerForm';
+import PlayerForm from 'cricket/player/form/PlayerForm';
 
 @Injectable()
 export class UpdateSquadJob {
@@ -39,6 +41,7 @@ export class UpdateSquadJob {
     async updateMatchSquads(match: any) {
         const matchUrl = match.matchUrl;
         const url = this.baseUrl + matchUrl
+        console.log(url)
         request(url, async (err, resp, body) => {
             if (err)
                 throw err;
@@ -64,57 +67,75 @@ export class UpdateSquadJob {
                 let squad1 = await this.squadService.getSquadById(match.squad1._id);
                 let squad2 = await this.squadService.getSquadById(match.squad2._id);
 
-                if (team1._id.equals(squad1.team)) {
+                console.log(squad1, squad2)
+
+                if (team1._id.equals(squad1.team._id)) {
                     //update squad 1 with team 1 players
-                    let playerList1 = [];
+                    let playerList1: Array<SquadPlayerForm> = [];
                     const team1Div = $('div.content-tab', mainDiv)[0];
                     const team1Table = $('table', team1Div);
                     $('tbody tr', team1Table).each(function () {
                         const nameTd = $('td', this)[0];
                         const roleTd = $('td', this)[1];
-                        const name = $(nameTd).text().split('(c)')[0].split('†')[0].trim();
-                        playerList1.push({ 'name': name, 'role': $(roleTd).text(), 'isPlaying': false });
+                        const name: String = $(nameTd).text().split('(c)')[0].split('†')[0].trim();
+                        const role: String = $(roleTd).text();
+                        const playerUrl = $('a', nameTd).attr('href');
+                        const playerForm = new SquadPlayerForm(new PlayerForm(name, playerUrl), role, false);
+                        playerList1.push(playerForm);
                     });
-                    this.squadService.updateSquadPlayers(new SquadUpdateForm(squad1._id, playerList1));
-                } else if (team2._id.equals(squad1.team)) {
+                    console.log(squad1._id, playerList1)
+                    this.squadService.updateSquadPlayers(squad1._id, new SquadUpdateForm(playerList1));
+                } else if (team2._id.equals(squad1.team._id)) {
                     //update squad 1 with team 2 players
-                    let playerList1 = [];
+                    let playerList1: Array<SquadPlayerForm> = [];
                     const team2Div = $('div.content-tab', mainDiv)[1];
                     const team2Table = $('table', team2Div);
                     $('tbody tr', team2Table).each(function () {
                         const nameTd = $('td', this)[0];
                         const roleTd = $('td', this)[1];
-                        const name = $(nameTd).text().split('(c)')[0].split('†')[0].trim();
-                        playerList1.push({ 'name': name, 'role': $(roleTd).text(), 'isPlaying': false });
+                        const name: String = $(nameTd).text().split('(c)')[0].split('†')[0].trim();
+                        const role: String = $(roleTd).text();
+                        const playerUrl = $('a', nameTd).attr('href');
+                        const playerForm = new SquadPlayerForm(new PlayerForm(name, playerUrl), role, false);
+                        playerList1.push(playerForm);
                     });
-                    this.squadService.updateSquadPlayers(new SquadUpdateForm(squad1._id, playerList1));
+                    console.log(squad1._id, playerList1)
+                    this.squadService.updateSquadPlayers(squad1._id, new SquadUpdateForm(playerList1));
                 }
 
 
-                if (team1._id.equals(squad2.team)) {
+                if (team1._id.equals(squad2.team._id)) {
                     //update squad 2 with team 1 players
-                    let playerList2 = [];
+                    let playerList2: Array<SquadPlayerForm> = [];
                     const team1Div = $('div.content-tab', mainDiv)[0];
                     const team1Table = $('table', team1Div);
                     $('tbody tr', team1Table).each(function () {
                         const nameTd = $('td', this)[0];
                         const roleTd = $('td', this)[1];
-                        const name = $(nameTd).text().split('(c)')[0].split('†')[0].trim();
-                        playerList2.push({ 'name': name, 'role': $(roleTd).text(), 'isPlaying': false });
+                        const name: String = $(nameTd).text().split('(c)')[0].split('†')[0].trim();
+                        const role: String = $(roleTd).text();
+                        const playerUrl = $('a', nameTd).attr('href');
+                        const playerForm = new SquadPlayerForm(new PlayerForm(name, playerUrl), role, false);
+                        playerList2.push(playerForm);
                     });
-                    this.squadService.updateSquadPlayers(new SquadUpdateForm(squad2._id, playerList2));
-                } else if (team2._id.equals(squad2.team)) {
+                    console.log(squad2._id, playerList2)
+                    this.squadService.updateSquadPlayers(squad2._id, new SquadUpdateForm(playerList2));
+                } else if (team2._id.equals(squad2.team._id)) {
                     //update squad 2 with team 2 players
-                    let playerList2 = [];
+                    let playerList2: Array<SquadPlayerForm> = [];
                     const team2Div = $('div.content-tab', mainDiv)[1];
                     const team2Table = $('table', team2Div);
                     $('tbody tr', team2Table).each(function () {
                         const nameTd = $('td', this)[0];
                         const roleTd = $('td', this)[1];
-                        const name = $(nameTd).text().split('(c)')[0].split('†')[0].trim();
-                        playerList2.push({ 'name': name, 'role': $(roleTd).text(), 'isPlaying': false });
+                        const name: String = $(nameTd).text().split('(c)')[0].split('†')[0].trim();
+                        const role: String = $(roleTd).text();
+                        const playerUrl = $('a', nameTd).attr('href');
+                        const playerForm = new SquadPlayerForm(new PlayerForm(name, playerUrl), role, false);
+                        playerList2.push(playerForm);
                     });
-                    this.squadService.updateSquadPlayers(new SquadUpdateForm(squad2._id, playerList2));
+                    console.log(squad2._id, playerList2)
+                    this.squadService.updateSquadPlayers(squad2._id, new SquadUpdateForm(playerList2));
                 }
             }
         });

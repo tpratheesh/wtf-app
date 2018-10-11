@@ -1,7 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
 export default class SeriesForm {
-    id: String
     @IsNotEmpty()
     name: String
     description: String
