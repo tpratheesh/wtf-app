@@ -34,8 +34,8 @@ export class MatchService {
     }
 
     async getMatchListUpcoming(): Promise<Match[]> {
-        const today = moment().utc(false).startOf('day');
-        const tomorrow = moment(today).utc(false).endOf('day').add(60, 'days');
+        const today = moment().utc(false);
+        const tomorrow = moment(today).utc(false).endOf('day').add(2, 'days');
         return await this.Match.find(
             {
                 $and: [{
