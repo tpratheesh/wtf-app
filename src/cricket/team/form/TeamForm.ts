@@ -1,6 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
 
 export default class TeamForm {
+    id: String
     @IsNotEmpty()
     name: String
     @IsNotEmpty()

@@ -76,6 +76,14 @@ export class MatchService {
         return match;
     }
 
+    async getMatchByName(matchName: String): Promise<Match> {
+        const match = await this.Match.findOne({ name: matchName })
+        if (match == null) {
+            throw new AppError('Invalid Match')
+        }
+        return match;
+    }
+
     async deleteMatch(matchId: Number) {
         const match = await this.Match.findById(matchId);
         if (match == null) {

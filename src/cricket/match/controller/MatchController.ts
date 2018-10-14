@@ -60,6 +60,15 @@ export class MatchController {
             .catch(error => handleError(error));
     }
 
+    @Get('match/name/:matchName')
+    async getMatchByName(@Req() req, @Param() params): Promise<any> {
+        const userName = req.user.name
+        this.logger.log('User ' + userName + ' requesting get match by matchName')
+        console.log(params.matchName)
+        return await this.matchService.getMatchByName(params.matchName)
+            .catch(error => handleError(error));
+    }
+
     @Delete('match/:id')
     async deleteMatch(@Req() req, @Param() params): Promise<SuccessResponse> {
         const userName = req.user.name
