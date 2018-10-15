@@ -68,6 +68,14 @@ export class MatchService {
         return await this.Match.findOneAndUpdate({ _id: form.id }, form);
     }
 
+    async updateMatchName(id: String, matchName: String) {
+        const match = await this.Match.findById(id);
+        if (match == null) {
+            throw new AppError('Invalid Match')
+        }
+        return await this.Match.findOneAndUpdate({ _id: id }, { name: matchName });
+    }
+
     async getMatchById(matchId: String): Promise<Match> {
         const match = await this.Match.findById(matchId);
         if (match == null) {

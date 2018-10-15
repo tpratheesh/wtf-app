@@ -46,6 +46,14 @@ export class UpdateSquadJob {
             if (err)
                 throw err;
             let $ = cheerio.load(body);
+            const gameHeader = $('div.gameHeader');
+            const matchNames = $('div.cscore_info-overview', gameHeader);
+            const matchNameDiv = $(matchNames)[0];
+            const matchName = $(matchNameDiv).text();
+            console.log(matchName);
+
+            await this.matchService.updateMatchName(match._id, matchName);
+
             const mainDiv = $('article.squad');
 
             const buttons = $('button.button-filter-alt', mainDiv);
