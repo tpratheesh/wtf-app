@@ -18,6 +18,14 @@ export class MatchController {
             .catch(error => handleError(error));
     }
 
+    @Get('match/list')
+    async matchListAll(@Req() req): Promise<any> {
+        const userName = req.user.name
+        this.logger.log('User ' + userName + ' requesting match list all')
+        return await this.matchService.getMatchList()
+            .catch(error => handleError(error));
+    }
+
     @Get('match/today')
     async matchListToday(@Req() req): Promise<any> {
         const userName = req.user.name

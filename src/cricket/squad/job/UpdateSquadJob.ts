@@ -32,7 +32,7 @@ export class UpdateSquadJob {
 
     async parseAndUpdateSquadList() {
         console.log('Updating squad details...');
-        let matchesList = await this.matchService.getMatchListUpcoming();
+        let matchesList = await this.matchService.getMatchListToday();
         console.log(matchesList.length)
         matchesList.reduce((promiseChain, arrayItem) =>
             promiseChain.then(() => this.updateMatchSquads(arrayItem)), Promise.resolve());
@@ -52,7 +52,7 @@ export class UpdateSquadJob {
             const matchName = $(matchNameDiv).text();
             console.log(matchName);
 
-            await this.matchService.updateMatchName(match._id, matchName);
+            await this.matchService.updateMatchDescription(match._id, matchName);
 
             const mainDiv = $('article.squad');
 

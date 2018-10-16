@@ -14,7 +14,13 @@ export class MatchService {
         private readonly Match: Model<Match>, private readonly logger: Logger) { }
 
     async getMatchListBySeries(seriesId: String): Promise<Match[]> {
-        return await this.Match.find({ series: seriesId });
+        return await this.Match.find({ series: seriesId })
+            .sort({ matchStartDate: 'asc' })
+    }
+
+    async getMatchList(): Promise<Match[]> {
+        return await this.Match.find({})
+            .sort({ matchStartDate: 'asc' });
     }
 
     async getMatchListToday(): Promise<Match[]> {
@@ -50,7 +56,7 @@ export class MatchService {
     }
 
     async saveMatch(form: MatchForm): Promise<Match> {
-        let match = await this.Match.findOne({ name: form.name });
+        let match = await this.getMatchByName(form.name);
         if (match == null) {
             const newMatch = new this.Match(form);
             return await newMatch.save();
@@ -68,12 +74,12 @@ export class MatchService {
         return await this.Match.findOneAndUpdate({ _id: form.id }, form);
     }
 
-    async updateMatchName(id: String, matchName: String) {
+    async updateMatchDescription(id: String, matchName: String) {
         const match = await this.Match.findById(id);
         if (match == null) {
             throw new AppError('Invalid Match')
         }
-        return await this.Match.findOneAndUpdate({ _id: id }, { name: matchName });
+        return await this.Match.findOneAndUpdate({ _id: id }, { description: matchName });
     }
 
     async getMatchById(matchId: String): Promise<Match> {
@@ -85,7 +91,10 @@ export class MatchService {
     }
 
     async getMatchByName(matchName: String): Promise<Match> {
-        const match = await this.Match.findOne({ name: matchName })
+        let match = await this.Match.findOne({ name: matchName })
+        if (match == null) {
+            match = await this.Match.findOne({ description: matchName })
+        }
         if (match == null) {
             throw new AppError('Invalid Match')
         }
