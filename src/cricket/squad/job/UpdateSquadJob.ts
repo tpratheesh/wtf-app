@@ -32,7 +32,7 @@ export class UpdateSquadJob {
 
     async parseAndUpdateSquadList() {
         console.log('Updating squad details...');
-        let matchesList = await this.matchService.getMatchListToday();
+        let matchesList = await this.matchService.getMatchListUpcoming();
         console.log(matchesList.length)
         matchesList.reduce((promiseChain, arrayItem) =>
             promiseChain.then(() => this.updateMatchSquads(arrayItem)), Promise.resolve());
@@ -76,6 +76,15 @@ export class UpdateSquadJob {
                 let squad2 = await this.squadService.getSquadById(match.squad2._id);
 
                 console.log(squad1, squad2)
+
+                // squad team names TBA
+                if (squad1.team.name == 'TBA' && team1.name != 'TBA') {
+                    squad1 = await this.squadService.updateSquadTeam(squad1._id, team1._id);
+                }
+
+                if (squad2.team.name == 'TBA' && team2.name != 'TBA') {
+                    squad2 = await this.squadService.updateSquadTeam(squad2._id, team2._id);
+                }
 
                 if (team1._id.equals(squad1.team._id)) {
                     //update squad 1 with team 1 players

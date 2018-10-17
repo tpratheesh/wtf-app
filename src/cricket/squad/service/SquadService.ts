@@ -52,6 +52,14 @@ export class SquadService {
         await this.Squad.findByIdAndDelete({ _id: squadId });
     }
 
+    async updateSquadTeam(squadId: String, team: String) {
+        return await this.Squad.findByIdAndUpdate({ _id: squadId },
+            {
+                $set: { team: team }
+            }, { new: true }
+        );
+    }
+
     async updateSquadPlayers(squadId: String, form: SquadUpdateForm) {
         let squadPlayers: Array<SquadPlayer> = [];
 

@@ -183,6 +183,7 @@ export class UpdateMatchJob {
             squad1._id,
             squad2._id,
             match.matchUrl);
-        await this.matchService.saveMatch(form);
+        const savedMatch = await this.matchService.saveMatch(form);
+        console.log(savedMatch)
     }
 }
