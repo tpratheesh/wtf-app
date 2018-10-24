@@ -30,6 +30,22 @@ import { SquadPlayerProvider } from './squad/providers/SquadPlayerProvider';
 import { UserMatchTeamController } from './usermatchteam/controller/UserMatchTeamController';
 import { UserMatchTeamService } from './usermatchteam/service/UserMatchTeamService';
 import { UserMatchTeamProvider } from './usermatchteam/providers/UserMatchTeamProvider';
+import { UpdateScoreCardScheduler } from './squad/scheduler/UpdateScoreCardScheduler';
+import { UpdateScoreCardJob } from './squad/job/UpdateScoreCardJob';
+import { PlayerInningsProvider } from './squad/providers/PlayerInningsProvider';
+import { InningsProvider } from './squad/providers/InningsProvider';
+import { FieldingProvider } from './squad/providers/FieldingProvider';
+import { BowlingProvider } from './squad/providers/BowlingProvider';
+import { BattingProvider } from './squad/providers/BattingProvider';
+import { InningsService } from './squad/service/InningsService';
+import { PlayerInningsService } from './squad/service/PlayerInningsService';
+import { BattingService } from './squad/service/BattingService';
+import { BowlingService } from './squad/service/BowlingService';
+import { SquadPlayerService } from './squad/service/SquadPlayerService';
+import { FieldingService } from './squad/service/FieldingService';
+import { GetLiveScoreScheduler } from './score/scheduler/GetLiveScoreScheduler';
+import { GetLiveScoreJob } from './score/job/GetLiveScoreJob';
+import { ScoreService } from './score/service/ScoreService';
 
 @Module({
   imports: [DatabaseModule, LoggerModule, CommonModule, CacheModule.register()],
@@ -39,8 +55,19 @@ import { UserMatchTeamProvider } from './usermatchteam/providers/UserMatchTeamPr
     SeriesService, UpdateSeriesScheduler, UpdateSeriesJob, ...SeriesProvider,
     MatchService, UpdateMatchScheduler, UpdateMatchJob, ...MatchProvider,
     SquadService, UpdateSquadScheduler, UpdateSquadJob, ...SquadProvider,
-    ...SquadPlayerProvider,
-    UserMatchTeamService, ...UserMatchTeamProvider
+    SquadPlayerService, ...SquadPlayerProvider,
+    ...PlayerInningsProvider,
+    InningsService, ...InningsProvider,
+    ...FieldingProvider,
+    ...BowlingProvider,
+    ...BattingProvider,
+    UserMatchTeamService, ...UserMatchTeamProvider,
+    UpdateScoreCardScheduler, UpdateScoreCardJob,
+    PlayerInningsService,
+    BattingService,
+    BowlingService,
+    FieldingService,
+    ScoreService, GetLiveScoreScheduler, GetLiveScoreJob
   ],
 })
 export class CricketModule { }

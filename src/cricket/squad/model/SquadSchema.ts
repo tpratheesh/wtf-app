@@ -6,6 +6,8 @@ export const SquadSchema = new mongoose.Schema({
     players: [{
         type: mongoose.Schema.Types.ObjectId, ref: "SquadPlayer", autopopulate: true
     }],
+    innings1: { type: mongoose.Schema.Types.ObjectId, ref: 'Innings', autopopulate: true },
+    innings2: { type: mongoose.Schema.Types.ObjectId, ref: 'Innings', autopopulate: true },
     createdDate: { type: mongoose.Schema.Types.Date, default: Date.now },
     updatedDate: { type: mongoose.Schema.Types.Date, default: Date.now },
 });

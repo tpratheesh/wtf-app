@@ -1,6 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
 
 export default class UserAccountForm {
+    id: String
     @IsNotEmpty()
     name: String
     description: String

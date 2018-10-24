@@ -4,10 +4,14 @@ import MatchForm from '../form/MatchForm';
 import SuccessResponse from 'common/model/SuccessResponse';
 import { Logger } from 'logger/Logger';
 import { MatchService } from '../service/MatchService';
+import { ScoreService } from 'cricket/score/service/ScoreService';
 
 @Controller('api/cricket')
 export class MatchController {
-    constructor(private readonly matchService: MatchService, private readonly logger: Logger) { }
+    constructor(
+        private readonly matchService: MatchService,
+        private readonly scoreService: ScoreService,
+        private readonly logger: Logger) { }
 
     @Get('match/list/:series')
     async matchList(@Req() req, @Param() params): Promise<any> {
@@ -84,5 +88,13 @@ export class MatchController {
         await this.matchService.deleteMatch(params.id)
             .catch(error => handleError(error));
         return new SuccessResponse('User Deleted Successfully');
+    }
+
+    @Get('matches/live')
+    async matchLive(@Req() req): Promise<any> {
+        const userName = req.user.name
+        this.logger.log('User ' + userName + ' requesting match live')
+        return await this.scoreService.getLiveMatches()
+            .catch(error => handleError(error));
     }
 }

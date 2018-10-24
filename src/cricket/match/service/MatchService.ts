@@ -5,17 +5,17 @@ import { Logger } from 'logger/Logger';
 import { Match } from '../interface/Match';
 import MatchForm from '../form/MatchForm';
 import * as moment from 'moment';
-import * as mongoose from 'mongoose';
 
 @Injectable()
 export class MatchService {
     constructor(
         @Inject('MatchModelToken')
-        private readonly Match: Model<Match>, private readonly logger: Logger) { }
+        private readonly Match: Model<Match>,
+        private readonly logger: Logger) { }
 
     async getMatchListBySeries(seriesId: String): Promise<Match[]> {
         return await this.Match.find({ series: seriesId })
-            .sort({ matchStartDate: 'asc' })
+            .sort({ matchStartDate: 'desc' })
     }
 
     async getMatchList(): Promise<Match[]> {

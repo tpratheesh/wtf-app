@@ -8,6 +8,9 @@ import SquadUpdateForm from '../form/SquadUpdateForm';
 import { PlayerService } from 'cricket/player/service/PlayerService';
 import { SquadPlayer } from '../interface/SquadPlayer';
 import SquadPlayerForm from '../form/SquadPlayerForm';
+import { Batting } from '../interface/Batting';
+import { Bowling } from '../interface/Bowling';
+import { Fielding } from '../interface/Fielding';
 
 @Injectable()
 export class SquadService {
@@ -94,5 +97,31 @@ export class SquadService {
                 $set: { players: players }
             }, { new: true }
         );
+    }
+
+    async updateSquadInnings1(squadId, innings) {
+        return await this.Squad.findByIdAndUpdate(squadId, { innings1: innings }, { new: true })
+    }
+
+    async updateSquadInnings2(squadId, innings) {
+        return await this.Squad.findByIdAndUpdate(squadId, { innings2: innings }, { new: true })
+    }
+
+    async updateSquadPlayerInnings1Batting(squadPlayerId, batting: Batting) {
+        return await this.SquadPlayer.update(
+            { 'players._id': squadPlayerId },
+            { $set: { 'players.innings1.batting': batting } })
+    }
+
+    async updateSquadPlayerInnings1Bowling(squadPlayerId, bowling: Bowling) {
+        return await this.SquadPlayer.update(
+            { 'players._id': squadPlayerId },
+            { $set: { 'players.innings1.bowling': bowling } })
+    }
+
+    async updateSquadPlayerInnings1Fielding(squadPlayerId, fielding: Fielding) {
+        return await this.SquadPlayer.update(
+            { 'players._id': squadPlayerId },
+            { $set: { 'players.innings1.fielding': fielding } })
     }
 }

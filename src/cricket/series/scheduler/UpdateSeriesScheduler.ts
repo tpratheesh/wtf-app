@@ -9,7 +9,7 @@ export class UpdateSeriesScheduler extends NestSchedule {
         super();
     }
 
-    // @Interval(2000)
+    @Cron('0 0 0 ? * * *')
     intervalJob() {
         console.log('UpdateSeriesScheduler job');
         this.updateSeriesJob.parseAndUpdateSeriesList();
