@@ -36,7 +36,7 @@ export class UpdateScoreCardJob {
 
     async parseAndUpdateScoreCard() {
         console.log('Updating Score Card Job...', new Date().getTime());
-        let matchesList = await this.matchService.getMatchById('5bbc2caf32d98a25fc3e8b93');
+        let matchesList = await this.matchService.getMatchById('5bbc2ca832d98a25fc3e89d4');
         this.updateMatchScoreCard(matchesList);
         // matchesList.reduce((promiseChain, arrayItem) =>
         //     promiseChain.then(() => this.updateMatchScoreCard(arrayItem)), Promise.resolve());

@@ -9,7 +9,7 @@ export class UpdateMatchScheduler extends NestSchedule {
         super();
     }
 
-    @Cron('0 0 1 ? * * *')
+    @Cron('0 10 15 ? * * *')
     intervalJob() {
         console.log('UpdateMatchScheduler job');
         this.updateMatchJob.parseAndUpdateMatchList();
